@@ -6,13 +6,6 @@ pool:
   - agent.name -equals office
 
 steps:
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      sudo apt-get update
-      sudo apt-get install unzip -y
-      Install unzip
 
 - task: TerraformInstaller@1
   inputs:
