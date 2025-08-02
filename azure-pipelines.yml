@@ -3,7 +3,7 @@ trigger:
 pool: 
   name: "Infra-Runners-pool"
   demands:
-  - agent.name -equals kmaster
+  - agent.name -equals office
 
 steps:
 - task: Bash@3
