@@ -1,0 +1,29 @@
+trigger:
+  - main
+pool: Infra-Runners-pool
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/count-for-each/infraRepo'
+    backendServiceArm: 'WebAppServiceConnection'
+    backendAzureRmResourceGroupName: 'aks-rg'
+    backendAzureRmStorageAccountName: 'aksstorrage'
+    backendAzureRmContainerName: 'aks-container'
+    backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/count-for-each/infraRepo'''
+    environmentServiceNameAzureRM: 'WebAppServiceConnection'
+
+
+
