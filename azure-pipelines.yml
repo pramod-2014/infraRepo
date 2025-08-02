@@ -11,7 +11,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/count-for-each/infraRepo'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
     backendServiceArm: 'WebAppServiceConnection'
     backendAzureRmResourceGroupName: 'aks-rg'
     backendAzureRmStorageAccountName: 'aksstorrage'
@@ -22,7 +22,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/count-for-each/infraRepo'''
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
     environmentServiceNameAzureRM: 'WebAppServiceConnection'
 
 
