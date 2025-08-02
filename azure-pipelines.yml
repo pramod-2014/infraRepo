@@ -3,9 +3,6 @@ trigger:
 pool: Infra-Runners-pool
 
 steps:
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: '1.6.6'
 
 - task: TerraformTask@5
   inputs:
