@@ -1,6 +1,9 @@
 trigger:
   - main
-pool: Infra-Runners-pool
+pool: 
+  name: "Infra-Runners-pool"
+  demands:
+  - agent.name -equals kmaster
 
 steps:
 
