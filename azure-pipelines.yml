@@ -3,13 +3,14 @@ trigger:
 pool: 
   name: "Infra-Runners-pool"
   demands:
-  - agent.name -equals office
+  - agent.name -equals DESKTOP-K83M3GM
 
 steps:
 
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
+
 
 - task: TerraformTask@5
   inputs:
@@ -25,9 +26,4 @@ steps:
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
-    environmentServiceNameAzureRM: 'WebAppServiceConnection'
-
-
-
+    command: 'plan'
