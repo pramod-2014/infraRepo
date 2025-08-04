@@ -16,7 +16,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
     backendServiceArm: 'WebAppServiceConnection'
     backendAzureRmResourceGroupName: 'aks-rg'
     backendAzureRmStorageAccountName: 'aksstorrage'
@@ -27,4 +27,4 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
