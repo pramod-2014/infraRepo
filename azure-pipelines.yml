@@ -6,6 +6,10 @@ pool:
   - agent.name -equals office
 
 steps:
+- powershell: |
+    $env:Path = "C:\agent\_work\_tool\terraform\1.12.2\x64;" + $env:Path
+    terraform version
+  displayName: 'Check Terraform Version'
 
 
 - task: TerraformTask@5
