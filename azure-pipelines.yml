@@ -34,10 +34,10 @@ steps:
 
 
   - task: TerraformTask@5
-    displayName: 'Terraform Plan'
+    displayName: 'Terraform Destroy'
     inputs:
       provider: 'azurerm'
-      command: 'apply'
+      command: 'destroy'
       workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
       environmentServiceNameAzureRM: 'WebAppServiceConnection'
       commandOptions: '--auto-approve'
