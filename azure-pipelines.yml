@@ -1,22 +1,21 @@
 trigger:
   - main
+
 pool: 
   name: "Infra-Runners-pool"
   demands:
   - agent.name -equals office
 
 steps:
-- powershell: |
-    $env:Path = "C:\agent\_work\_tool\terraform\1.12.2\x64;" + $env:Path
-    terraform version
-  displayName: 'Check Terraform Version'
-
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: '1.12.2'
 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)//terraform'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     backendServiceArm: 'WebAppServiceConnection'
     backendAzureRmResourceGroupName: 'aks-rg'
     backendAzureRmStorageAccountName: 'aksstorrage'
