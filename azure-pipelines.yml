@@ -1,7 +1,7 @@
 trigger:
   - main
 
-pool: 
+pool:
   name: "Infra-Runners-pool"
   demands:
   - agent.name -equals office
@@ -12,17 +12,19 @@ steps:
   inputs:
     terraformVersion: '1.12.2'
 
-- powershell: |
-    $env:Path = "C:\agent\_work\_tool\terraform\1.12.2\x64;" + $env:Path
-    terraform init -backend-config="resource_group_name=aks-rg" `
-                   -backend-config="storage_account_name=aksstorrage" `
-                   -backend-config="container_name=aks-container" `
-                   -backend-config="key=terraform.tfstate"
-  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-  displayName: 'Terraform Init'
-
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    backendServiceArm: 'WebAppServiceConnection'
+    backendAzureRmResourceGroupName: 'aks-rg'
+    backendAzureRmStorageAccountName: 'aksstorrage'
+    backendAzureRmContainerName: 'aks-container'
+    backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
