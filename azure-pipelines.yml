@@ -3,7 +3,7 @@ trigger:
 pool: 
   name: "Infra-Runners-pool"
   demands:
-  - agent.name -equals DESKTOP-K83M3GM
+  - agent.name -equals office
 
 steps:
 
@@ -11,7 +11,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/infraRepo'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
     backendServiceArm: 'WebAppServiceConnection'
     backendAzureRmResourceGroupName: 'aks-rg'
     backendAzureRmStorageAccountName: 'aksstorrage'
