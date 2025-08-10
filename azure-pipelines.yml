@@ -32,7 +32,7 @@ stages:
             backendAzureRmResourceGroupName: 'aks-rg'
             backendAzureRmStorageAccountName: 'aksstorrage'
             backendAzureRmContainerName: 'aks-container'
-            backendAzureRmKey: 'terraform.tfsate'
+            backendAzureRmKey: 'terraform.tfstate'
 
   - stage: TerraformFMTStage
     displayName: Terrafom FMT
