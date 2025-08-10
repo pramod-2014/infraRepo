@@ -1,43 +1,58 @@
 trigger:
- branches:
-   include:
-     - main
+  branches:
+    include:
+      - main
+
 pool: 
   name: "Infra-Runners-pool"
   demands:
     - agent.name -equals DESKTOP-K83M3GM
 
 stages:
-    - stage: terraformInatallation
-      jobs:
-          - job: terraformInatallaionJob
-            displayName: terraform Inatallation
-            steps:
-            - task: TerraformInstaller@1
-              inputs:
-                terraformVersion: 'latest'
 
-            - task: TerraformTask@5
-              inputs:
-                provider: 'azurerm'
-                command: 'custom'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-                outputTo: 'console'
-                customCommand: 'fmt'
-                environmentServiceNameAzureRM: 'WebAppServiceConnection'
+  # ✅ Stage 1: Terraform Install
+  - stage: TerraformInstall
+    displayName: 'Terraform Installation'
+    jobs:
+      - job: TerraformInstallJob
+        displayName: 'Install Terraform'
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
 
-    - stage: terraformInit
-      jobs:
-          - job: terraforminitJob
-            displayName: Terraform Init
-            steps:
-            - task: TerraformTask@5
-              inputs:
-                provider: 'azurerm'
-                command: 'init'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-                backendServiceArm: 'WebAppServiceConnection'
-                backendAzureRmResourceGroupName: 'aks-rg'
-                backendAzureRmStorageAccountName: 'modules'
-                backendAzureRmContainerName: 'aks-container'
-                backendAzureRmKey: 'terraform.tfstate'
+  # ✅ Stage 2: Terraform Format (fmt)
+  - stage: TerraformFmt
+    displayName: 'Terraform Format Check'
+    dependsOn: TerraformInstall
+    jobs:
+      - job: TerraformFmtJob
+        displayName: 'Run terraform fmt'
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'custom'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
+              customCommand: 'fmt'
+              outputTo: 'console'
+              # ❌ Removed environmentServiceNameAzureRM — not needed for fmt
+
+  # ✅ Stage 3: Terraform Init
+  - stage: TerraformInit
+    displayName: 'Terraform Init'
+    dependsOn: TerraformFmt
+    jobs:
+      - job: TerraformInitJob
+        displayName: 'Terraform Init Backend'
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
+              backendServiceArm: 'WebAppServiceConnection'
+              backendAzureRmResourceGroupName: 'aks-rg'
+              backendAzureRmStorageAccountName: 'modules'
+              backendAzureRmContainerName: 'aks-container'
+              backendAzureRmKey: 'terraform.tfstate'
