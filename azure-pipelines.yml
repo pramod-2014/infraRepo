@@ -27,7 +27,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/module'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
             backendServiceArm: 'WebAppServiceConnection'
             backendAzureRmResourceGroupName: 'aks-rg'
             backendAzureRmStorageAccountName: 'aksstorrage'
@@ -44,7 +44,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'custom'
-            workingDirectory: '$(System.DefaultWorkingDirectory)module'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
             commandOptions: 'fmt'
             outputTo: 'console'
   
@@ -58,5 +58,5 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '$(System.DefaultWorkingDirectory)module'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
             environmentServiceNameAzureRM: 'WebAppServiceConnection'
