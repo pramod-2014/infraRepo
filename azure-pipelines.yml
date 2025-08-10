@@ -6,44 +6,56 @@ pool:
   demands:
     - agent.name -equals office
 
-steps:
-  - task: TerraformInstaller@1
-    displayName: 'Install Terraform'
-    inputs:
-      terraformVersion: '1.12.2'
+stages:
+  - stage: terraformInstall
+    displayName: Terraform Insatllation 
+    jobs:
+      - job: InatallingJobb
+        steps:
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
 
-  - task: TerraformTask@5
-    displayName: 'Terraform Init'
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-      backendServiceArm: 'WebAppServiceConnection'
-      backendAzureRmResourceGroupName: 'aks-rg'
-      backendAzureRmStorageAccountName: 'aksstorrage'
-      backendAzureRmContainerName: 'aks-container'
-      backendAzureRmKey: 'terraform.tfstate'
+  - stage: terraformInitStage
+    displayName: Terraform Init
+    jobs:
+      - job: terraformInitJob
+        displayName: Terraform Init 
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/module'
+            backendServiceArm: 'WebAppServiceConnection'
+            backendAzureRmResourceGroupName: 'aks-rg'
+            backendAzureRmStorageAccountName: 'aksstorrage'
+            backendAzureRmContainerName: 'aks-container'
+            backendAzureRmKey: 'terraform.tfsate'
 
-  - task: TerraformTask@5
-    displayName: 'Terraform Plan'
-    inputs:
-      provider: 'azurerm'
-      command: 'plan'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-      environmentServiceNameAzureRM: 'WebAppServiceConnection'
-
-
-  - task: TerraformTask@5
-    displayName: 'Terraform Destroy'
-    inputs:
-      provider: 'azurerm'
-      command: 'destroy'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-      environmentServiceNameAzureRM: 'WebAppServiceConnection'
-      commandOptions: '--auto-approve'
-
-
-
-      
-
-
+  - stage: TerraformFMTStage
+    displayName: Terrafom FMT
+    jobs:
+      - job: terraformfmtJob
+        displayName: Terraform FMT
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'custom'
+            workingDirectory: '$(System.DefaultWorkingDirectory)module'
+            commandOptions: 'fmt'
+            outputTo: 'console'
+  
+  - stage: TerraformPlanstage
+    displayName: Terraform Plan
+    jobs:
+      - job: terraformPlanJob
+        displayName: Terraform Plan
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)module'
+            environmentServiceNameAzureRM: 'WebAppServiceConnection'
