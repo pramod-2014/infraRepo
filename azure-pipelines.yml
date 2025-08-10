@@ -4,13 +4,14 @@ trigger:
 pool:
   name: Infra-Runners-pool
   demands:
-    - agent.name -equals office
+    - agent.name -equals DESKTOP-K83M3GM
 
 stages:
   - stage: terraformInstall
     displayName: Terraform Insatllation 
     jobs:
       - job: InatallingJobb
+        displayName: Terraform Installing
         steps:
         - task: TerraformInstaller@1
           inputs:
