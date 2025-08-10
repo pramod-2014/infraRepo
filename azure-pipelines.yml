@@ -36,7 +36,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
               customCommand: 'fmt'
               outputTo: 'console'
-              # ❌ Removed environmentServiceNameAzureRM — not needed for fmt
+              environmentServiceNameAzureRM: 'WebAppServiceConnection'
 
   # ✅ Stage 3: Terraform Init
   - stage: TerraformInit
