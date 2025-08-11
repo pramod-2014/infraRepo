@@ -6,7 +6,7 @@ trigger:
 pool: 
   name: "Infra-Runners-pool"
   demands:
-    - agent.name -equals DESKTOP-K83M3GM
+    - agent.name -equals office
 
 stages:
 
