@@ -56,3 +56,4 @@ stages:
               backendAzureRmStorageAccountName: 'aksstorrage'
               backendAzureRmContainerName: 'aks-container'
               backendAzureRmKey: 'terraform.tfstate'
+              environmentServiceNameAzureRM: 'WebAppServiceConnection'
