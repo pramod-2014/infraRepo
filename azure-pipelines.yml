@@ -38,21 +38,21 @@ stages:
               outputTo: 'console'
               environmentServiceNameAzureRM: 'WebAppServiceConnection'
 
-  # Stage 3: Terraform Init
-  - stage: TerraformInit
-    displayName: 'Terraform Init'
-    dependsOn: TerraformFmt
-    jobs:
-      - job: TerraformInitJob
-        displayName: 'Terraform Init Backend'
-        steps:
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-              backendServiceArm: 'Azure subscription 1(a29ac6ee-0d4f-41fe-8359-df26a6fce56c)'
-              backendAzureRmResourceGroupName: 'aks-rg'
-              backendAzureRmStorageAccountName: 'aksstorrage'
-              backendAzureRmContainerName: 'aks-container'
-              backendAzureRmKey: 'terraform.tfstate'
+  # # Stage 3: Terraform Init
+  # - stage: TerraformInit
+  #   displayName: 'Terraform Init'
+  #   dependsOn: TerraformFmt
+  #   jobs:
+  #     - job: TerraformInitJob
+  #       displayName: 'Terraform Init Backend'
+  #       steps:
+  #         - task: TerraformTask@5
+  #           inputs:
+  #             provider: 'azurerm'
+  #             command: 'init'
+  #             workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
+  #             backendServiceArm: 'WebAppServiceConnection'
+  #             backendAzureRmResourceGroupName: 'aks-rg'
+  #             backendAzureRmStorageAccountName: 'aksstorrage'
+  #             backendAzureRmContainerName: 'aks-container'
+  #             backendAzureRmKey: 'terraform.tfstate'
