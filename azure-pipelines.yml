@@ -10,7 +10,7 @@ pool:
 
 stages:
 
-  # ✅ Stage 1: Terraform Install
+  # Stage 1: Terraform Install
   - stage: TerraformInstall
     displayName: 'Terraform Installation'
     jobs:
@@ -21,12 +21,12 @@ stages:
             inputs:
               terraformVersion: 'latest'
 
-  # ✅ Stage 2: Terraform Format (fmt)
+  # Stage 2: Terraform Format (fmt)
   - stage: TerraformFmt
     displayName: 'Terraform Format Check'
     dependsOn: TerraformInstall
     jobs:
-      - job: TerraformFmtJob
+      - job: TerraformfmtJob
         displayName: 'Run terraform fmt'
         steps:
           - task: TerraformTask@5
@@ -38,7 +38,7 @@ stages:
               outputTo: 'console'
               environmentServiceNameAzureRM: 'WebAppServiceConnection'
 
-  # ✅ Stage 3: Terraform Init
+  # Stage 3: Terraform Init
   - stage: TerraformInit
     displayName: 'Terraform Init'
     dependsOn: TerraformFmt
