@@ -21,33 +21,12 @@ stages:
             inputs:
               terraformVersion: 'latest'
 
-  # Stage 2: Terraform Format (fmt)
-  - stage: Terraformfmt
-    displayName: 'Terraform Format Check'
-    
-    jobs:
-      - job: TerraformfmtJob
-        displayName: 'Run terraform fmt'
-        steps:
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
               command: 'custom'
               workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-              customCommand: 'fmt'
               outputTo: 'console'
+              customCommand: 'fmt'
               environmentServiceNameAzureRM: 'WebAppServiceConnection'
-        
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-              backendServiceArm: 'WebAppServiceConnection'
-              backendAzureRmResourceGroupName: 'aks-rg'
-              backendAzureRmStorageAccountName: 'aksstorrage'
-              backendAzureRmContainerName: 'aks-container'
-              backendAzureRmKey: 'terraform.tfstate'
-          
-
  
