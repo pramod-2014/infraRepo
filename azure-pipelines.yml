@@ -24,7 +24,7 @@ stages:
   # Stage 2: Terraform Format (fmt)
   - stage: Terraformfmt
     displayName: 'Terraform Format Check'
-    dependsOn: TerraformInstall
+    
     jobs:
       - job: TerraformfmtJob
         displayName: 'Run terraform fmt'
