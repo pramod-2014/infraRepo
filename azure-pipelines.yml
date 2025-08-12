@@ -45,7 +45,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/modues'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
             backendServiceArm: 'WebAppServiceConnection'
             backendAzureRmResourceGroupName: 'aks-rg'
             backendAzureRmStorageAccountName: 'aksstorrage'
