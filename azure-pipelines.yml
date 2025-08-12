@@ -64,10 +64,21 @@ stages:
 # Terraform Plan 
                
         - task: TerraformTask@5
+          displayName: Terraform Plan
           inputs:
             provider: 'azurerm'
             command: 'plan'
             workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
             environmentServiceNameAzureRM: 'WebAppServiceConnection'
 
+      - job: manualvalidaton
+        displayName: manualValidation
+        pool: server
+        timeoutInMinutes: 1440
+        steps:
         
+          - task: ManualValidation@1
+            inputs:
+              notifyUsers: 'gangwarpramod90@gamil.com'
+              approvers: 'pramod'
+              instructions: 'please check and validate if code is correct'
