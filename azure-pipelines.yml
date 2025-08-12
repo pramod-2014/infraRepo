@@ -51,6 +51,7 @@ stages:
             backendAzureRmStorageAccountName: 'aksstorrage'
             backendAzureRmContainerName: 'aks-container'
             backendAzureRmKey: 'terraform.tfstate'
+            commandOptions: '-reconfigure'
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
