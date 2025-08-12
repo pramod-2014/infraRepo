@@ -33,25 +33,25 @@ stages:
   - stage: terraformInstallationStage
     displayName: Terraform Inastallation Stage
     jobs:
-      - job: terraformInatllationJob
-        displayName: terraform Installation Job
+      - job: terraformPlanJob
+        displayName: terraform plan Job
         steps:
-        - task: TerraformInstaller@1
-          inputs:
-            terraformVersion: 'latest'
+        # - task: TerraformInstaller@1
+        #   inputs:
+        #     terraformVersion: 'latest'
 
-        - task: TerraformTask@5
-          displayName: Terraform Init
-          inputs:
-            provider: 'azurerm'
-            command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
-            backendServiceArm: 'WebAppServiceConnection'
-            backendAzureRmResourceGroupName: 'aks-rg'
-            backendAzureRmStorageAccountName: 'aksstorrage'
-            backendAzureRmContainerName: 'aks-container'
-            backendAzureRmKey: 'terraform.tfstate'
-            commandOptions: '-reconfigure'
+        # - task: TerraformTask@5
+        #   displayName: Terraform Init
+        #   inputs:
+        #     provider: 'azurerm'
+        #     command: 'init'
+        #     workingDirectory: '$(System.DefaultWorkingDirectory)/modules'
+        #     backendServiceArm: 'WebAppServiceConnection'
+        #     backendAzureRmResourceGroupName: 'aks-rg'
+        #     backendAzureRmStorageAccountName: 'aksstorrage'
+        #     backendAzureRmContainerName: 'aks-container'
+        #     backendAzureRmKey: 'terraform.tfstate'
+        #     commandOptions: '-reconfigure'
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
